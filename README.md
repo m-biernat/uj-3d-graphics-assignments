@@ -23,15 +23,3 @@ make -j
 ./src/Examples/CameraMovement
 ```
 
-## CLion 
-
-This projects integrates with CLion IDE "out of the box". Just chose Open project and then choose the project 
-directory.
-
-## VS Code
-
-Same with VS Code
-## QTCreator 
-
-Choose Open project and then choose &lt;project dir&gt;/CMakeLists.txt file. 
-
