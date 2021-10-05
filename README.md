@@ -20,6 +20,6 @@ mkdir build
 cd build
 cmake ..
 make -j 
-./src/Examples/CameraMovement
+./src/Examples/Triangle
 ```
 
