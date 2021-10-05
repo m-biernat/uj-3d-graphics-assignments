@@ -44,24 +44,21 @@ set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_Assignments OFF CACHE BOOL "" FORCE)
 
-file(MAKE_DIRECTORY "${3rdParty_DIR}/glfw" )
-file(MAKE_DIRECTORY "${3rdParty_DIR}/glfw/build")
+
 FetchContent_Declare(
         glfw
         GIT_REPOSITORY    git@github.com:glfw/glfw.git
-        SOURCE_DIR "${3rdParty_DIR}/glfw"
-        BINARY_DIR "${3rdParty_DIR}/glfw/build"
+        PREFIX "${3rdParty_DIR}/glfw"
+     
 )
 FetchContent_MakeAvailable(glfw)
 
 # GLM
-file(MAKE_DIRECTORY "${3rdParty_DIR}/glm" )
-file(MAKE_DIRECTORY "${3rdParty_DIR}/glm/build")
+
 FetchContent_Declare(
         glm
         GIT_REPOSITORY git@github.com:g-truc/glm.git
-        SOURCE_DIR "${3rdParty_DIR}/glm"
-        BINARY_DIR "${3rdParty_DIR}/glm/build"
+        PREFIX "${3rdParty_DIR}/glm"
 )
 FetchContent_MakeAvailable(glm)
 
@@ -73,8 +70,7 @@ if(__VS_CODE__)
 FetchContent_Declare(
         glslang
         GIT_REPOSITORY git@github.com:KhronosGroup/glslang.git
-        SOURCE_DIR "${3rdParty_DIR}/glslang"
-        BINARY_DIR "${3rdParty_DIR}/glslang/build"
+        PREFIX "${3rdParty_DIR}/glslang"
 )
 
 FetchContent_MakeAvailable(glslang)
