@@ -47,7 +47,7 @@ set(GLFW_BUILD_Assignments OFF CACHE BOOL "" FORCE)
 
 FetchContent_Declare(
         glfw
-        GIT_REPOSITORY    git@github.com:glfw/glfw.git
+        GIT_REPOSITORY   https://github.com/glfw/glfw.git
         PREFIX "${3rdParty_DIR}/glfw"
      
 )
@@ -57,7 +57,7 @@ FetchContent_MakeAvailable(glfw)
 
 FetchContent_Declare(
         glm
-        GIT_REPOSITORY git@github.com:g-truc/glm.git
+        GIT_REPOSITORY https://github.com/g-truc/glm.git
         PREFIX "${3rdParty_DIR}/glm"
 )
 FetchContent_MakeAvailable(glm)
@@ -69,7 +69,7 @@ if(__VS_CODE__)
 
 FetchContent_Declare(
         glslang
-        GIT_REPOSITORY git@github.com:KhronosGroup/glslang.git
+        GIT_REPOSITORY https://github.com/KhronosGroup/glslang.git
         PREFIX "${3rdParty_DIR}/glslang"
 )
 
