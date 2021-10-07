@@ -28,6 +28,7 @@ if not source_path.exists() or not source_path.is_dir():
 
 dest_path = ASSIGNMENTS_DIR.joinpath(args.dest)
 
+
 if dest_path.exists():
     if args.force:
         try:
