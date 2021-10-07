@@ -42,3 +42,16 @@ After that  you should have a new kit visible in VS Code. However if you try to 
 mklink make.exe `mingw32-make.exe
 ```
  
+## Assignments
+
+Before starting each assignment you should copy the directory containing previous assignment. Specyfically you should not modify anything in `src/Assignments/Triangle` folder, but copy it to `src/Assignments/House`  folder. You can do it using `cp` command (on linux/unix). 
+```shell
+cp -r scr/Assignments/Triangle  scr/Assignments/House
+```
+Then you should modify the project name in `src/Assignments/House/CMakeLists.txt` from `Triagle` to `House`. 
+
+I have provided a python script  that you can use for this:
+```
+python ./scripts/copy_assignment.py Triangle House
+```
+Use at your own risk!
