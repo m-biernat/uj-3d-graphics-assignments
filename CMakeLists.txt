@@ -47,8 +47,7 @@ set(GLFW_BUILD_Assignments OFF CACHE BOOL "" FORCE)
 
 FetchContent_Declare(
         glfw
-        GIT_REPOSITORY   https://github.com/glfw/glfw.git
-     
+        GIT_REPOSITORY   https://github.com/glfw/glfw.git     
 )
 FetchContent_MakeAvailable(glfw)
 
@@ -57,11 +56,8 @@ FetchContent_MakeAvailable(glfw)
 FetchContent_Declare(
         glm
         GIT_REPOSITORY https://github.com/g-truc/glm.git
-      
 )
 FetchContent_MakeAvailable(glm)
-
-
 
 
 if(__VS_CODE__)
@@ -71,13 +67,10 @@ if(__VS_CODE__)
 FetchContent_Declare(
         glslang
         GIT_REPOSITORY https://github.com/KhronosGroup/glslang.git
-       
-)
 
-FetchContent_MakeAvailable(glslang)
-FetchContent_GetProperties( glslang
-BINARY_DIR GLSLANG_BINARY_DIR
 )
+FetchContent_MakeAvailable(glslang)
+
 
 endif()
 
