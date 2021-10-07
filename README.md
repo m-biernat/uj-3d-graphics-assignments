@@ -1,25 +1,27 @@
 # A 3D graphics programming project.
 
-After cloning the repository 
+This repository contains the "Hello World!" equivalent for OpenGL C++ programming.  
 
-```shell
-git clone git@github.com:pbialas7-Teaching/3DGraphicsCodeBase.git
-```
+## Downloading 
 
-To make this work you need to have the  ssh key added in you github account.
-This is the prefered option. If not you can use 
+Clone the repository:
+
 ```shell
 git clone https://github.com/pbialas7-Teaching/3DGraphicsCodeBase.git
 ```
-and log to you github account when prompted. 
+## Building 
 
-Use CMake to compile:
+### "Plain vanilla" (Linux/Unix via command line)
+
+Use CMake to compile. First change to the cloned repository and then run:
 
 ```shell
 mkdir build
 cd build
 cmake ..
 make -j 
-./src/Examples/Triangle
+./src/Assignments/Triangle
 ```
+### VS Code 
 
+### CLion 
