@@ -13,21 +13,20 @@ parser.add_argument("dest", metavar="dest", action="store")
 
 args = parser.parse_args()
 
-ASSIGNMENTS_DIR = Path("src/Assignments")
+ASSIGNMENTS_PATH = Path("src/Assignments")
 
 
-if not ASSIGNMENTS_DIR.exists():
+if not ASSIGNMENTS_PATH.exists():
     print("You are not in top directory")
     sys.exit(0)
 
-source_path = ASSIGNMENTS_DIR.joinpath(args.source)
+source_path = ASSIGNMENTS_PATH.joinpath(args.source)
 
 if not source_path.exists() or not source_path.is_dir():
     print(f"Source {source_path.name():s} is not a subdirectory of {ASSIGNMENTS_DIR}")
     sys.exit(0)
 
-dest_path = ASSIGNMENTS_DIR.joinpath(args.dest)
-
+dest_path = ASSIGNMENTS_PATH.joinpath(args.dest)
 
 if dest_path.exists():
     if args.force:

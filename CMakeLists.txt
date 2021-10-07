@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.15)
 
-project(Graphics3D CXX C)
+project(Graphics3DCode CXX C)
 
 include(FetchContent)
 include(ExternalProject)

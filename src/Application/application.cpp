@@ -32,7 +32,7 @@
  * If generated with debug option GLAD  permits to register callbacks that will be called before and after each OpenGL function call. 
  * This is switched off by default by me, so to not interfere with my error reporting code.  GLAD debuging can be enabled in the CMakeLists.txt file.
  * 
- * This unnamed namespace contains two predefined post call callbacks making them local to this file.  
+ * This unnamed namespace contains two predefined postcall callbacks making them local to this file.  
  * 
  */
 namespace
@@ -65,10 +65,11 @@ namespace
 /**
  * @brief Construct a new xe::Application::Application object
  * 
- * @param width 
- * @param height 
- * @param title 
- * @param debug 
+ * @param width  Width of the window    
+ * @param height Height of the window
+ * @param title Title of the created application window. 
+ * @param debug specify if the debug information should be generated after each OpenGL function call
+ *              has efect only if compiled with debug version of glad.     
  */
 xe::Application::Application(int width, int height, std::string title, bool debug) : screenshot_n_(0)
 {
@@ -80,6 +81,7 @@ xe::Application::Application(int width, int height, std::string title, bool debu
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, MINOR);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, true);
+        glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE);
 
         window_ = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
         if (!window_)
@@ -91,7 +93,6 @@ xe::Application::Application(int width, int height, std::string title, bool debu
             exit(-1);
         }
         glfwMakeContextCurrent(window_);
-        glfwSwapInterval(1);
         glfwSetWindowUserPointer(window_, this);
 
         glfwSetFramebufferSizeCallback(window_, Application::glfw_framebuffer_size_callback);
@@ -102,6 +103,8 @@ xe::Application::Application(int width, int height, std::string title, bool debu
         glfwSetWindowRefreshCallback(window_, glfw_window_refresh_callback);
 
 #ifdef GLAD_OPTION_GL_DEBUG
+        //Additionally if GLAD debugging is on, the we can still switch it off via debug variable.
+        //This works by registering an empty predefined above callback.  
         if (debug)
             gladSetGLPostCallback(_post_call_callback_default);
         else
@@ -123,6 +126,11 @@ xe::Application::Application(int width, int height, std::string title, bool debu
     }
 }
 
+/**
+ * @brief This starts the main event loop. 
+ * 
+ * @param verbose unused parameter. 
+ */
 void xe::Application::run(int verbose)
 {
 
@@ -136,17 +144,23 @@ void xe::Application::run(int verbose)
     while (!glfwWindowShouldClose(window_))
     {
 
+        //Clear the framebuufer by filling it with color set using the glClearColor function. 
+        //Also clears the depth buffer. 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        /* Render here */
-
+        //This method should be overidden by you and will contain the rendering code.
         frame();
-        /* Swap front and back buffers */
+        /* Swap front and back buffers 
+           The rendering is done into the BACK buffer, swapping it with front buffer displays it on the screen.  
+           This is done after n screen updates where n is the number set by the glfwSwapInterwal. 
+           Setting it to one as I did set the swap rate to v-sync rate. 
+        */
         glfwSwapBuffers(window_);
 
         /* Poll for and process events */
         glfwPollEvents();
 #ifdef __APPLE__
-        // A hack to fix bug in apple implementation.
+        // A hack to fix bug in apple implementation. 
+        // maybe not needed now. Didn't check :( 
         if (!macMoved)
         {
             int x, y;
@@ -155,7 +169,6 @@ void xe::Application::run(int verbose)
             glfwSetWindowPos(window_, --x, y);
             macMoved = true;
         }
-
 #endif
     }
 
@@ -225,15 +238,13 @@ void xe::Application::save_frame_buffer()
 {
     glPixelStorei(GL_PACK_ALIGNMENT, 1);
     glReadBuffer(GL_FRONT);
-    if (glGetError() == GL_INVALID_OPERATION) /* the display is single buffered */
-        std::cerr << "Error setting FRAMEBUFFER\n";
+    if (glGetError() == GL_INVALID_OPERATION) 
+        std::cerr << "Saving Freme buffer error: Front buffer does not exist."<<std::endl;
 
-    int w, h;
-    std::tie(w, h) = frame_buffer_size();
+    auto[w,h] = frame_buffer_size();
     auto data = (GLubyte *)malloc(w * h * 3);
-    glReadPixels(0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, data);
-    if (glGetError() != GL_NO_ERROR)
-        printf("Unknown error Reading Pixels\n");
+    OGL_CALL(glReadPixels(0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, data));
+    
     stbi_flip_vertically_on_write(1);
     std::stringstream ss;
     ss << "screenshot_" << std::setw(3) << std::setfill('0') << screenshot_n_ << ".png";

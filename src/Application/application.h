@@ -25,6 +25,8 @@ namespace xe
             return std::make_pair(w, h);
         }
 
+        void save_frame_buffer();
+
         virtual void init(){};
 
         virtual void frame() {}
@@ -43,7 +45,7 @@ namespace xe
 
         virtual void window_refresh_callback();
 
-        void save_frame_buffer();
+       
 
     protected:
         GLFWwindow *window_;
