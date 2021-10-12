@@ -110,7 +110,7 @@ xe::Application::Application(int width, int height, std::string title, bool debu
         else
         {
             std::cerr << "NO DEBUG\n";
-            << gladSetGLPostCallback(_post_call_callback_no_debug);
+            gladSetGLPostCallback(_post_call_callback_no_debug);
         }
 #endif
 
@@ -239,7 +239,7 @@ void xe::Application::save_frame_buffer()
     glPixelStorei(GL_PACK_ALIGNMENT, 1);
     glReadBuffer(GL_FRONT);
     if (glGetError() == GL_INVALID_OPERATION) 
-        std::cerr << "Saving Freme buffer error: Front buffer does not exist."<<std::endl;
+        std::cerr << "Saving Frame buffer error: Front buffer does not exist."<<std::endl;
 
     auto[w,h] = frame_buffer_size();
     auto data = (GLubyte *)malloc(w * h * 3);
@@ -250,6 +250,7 @@ void xe::Application::save_frame_buffer()
     ss << "screenshot_" << std::setw(3) << std::setfill('0') << screenshot_n_ << ".png";
     stbi_write_png(ss.str().c_str(), w, h, 3, data, w * 3);
     ++screenshot_n_;
+    std::cerr<<ss.str()<<"\n"; 
 }
 
 void xe::Application::glfw_window_refresh_callback(GLFWwindow *window)

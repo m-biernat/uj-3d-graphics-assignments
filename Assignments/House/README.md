@@ -1,4 +1,5 @@
-# House
+# House 
+Termin oddania: 20.10.21 23:59 2pkt. 
 
 1. Please copy the `src/Assignments/Triangle`  directory to  `src/Assignments/House`. You can do this either by provided script (use it at your own risk!):
     ```{python}
@@ -30,4 +31,10 @@
 
 4. Start by finding the place in `app.cpp` file where positions of vertices are stored. Change the location of the vertices.  What happens when one of the coordinates _x,y_ is outside the range [-1,1]? What if  _z_ coordinate is outside this range?
 5. Add one more triangle. Rember to edit draw command in the `frame` function. 
-6. Draw a house by adding beneath original triangle a rectangle of width 1.0 and height 0.5. This should be your final version that you should submit to repository. 
+6. Draw a  house 
+ by adding beneath original triangle a rectangle of width 1.0 and height 0.5. This should be your final version that you should submit to repository.
+  
+  ![house](house.png)  
+  
+    
+    
