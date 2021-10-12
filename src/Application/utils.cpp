@@ -2,13 +2,16 @@
 // Created by pbialas on 05.08.2020.
 //
 #include "utils.h"
+#include <vector>
 #include <iostream>
 #include <sstream>
 #include <fstream>
 #include <unordered_map>
+#include <cstring>
 
 #include "glad/gl.h"
 
+#include "Application/shader_source.h"
 namespace xe
 {
     namespace utils
@@ -81,19 +84,6 @@ namespace xe
             default:
                 return "UNKNOWN ERROR";
             }
-        }
-
-        std::string load_file(const std::string &path)
-        {
-            std::ifstream file(path, std::ios::in | std::ios::binary);
-            if (file)
-            {
-                std::ostringstream contents;
-                contents << file.rdbuf();
-                file.close();
-                return (contents.str());
-            }
-            return {};
         }
 
         GLenum get_and_report_error(const std::string function_call, std::string file_name, int line_number)
@@ -193,7 +183,12 @@ namespace xe
 
         GLuint create_shader_from_file(GLenum type, const std::string &path)
         {
-            auto shader_source = utils::load_file(path);
+            source_t shader_source;
+            shader_source.load(path);
+
+#ifdef __APPLE__
+            shader_source.replace_version("410");
+#endif
             if (shader_source.empty())
             {
                 std::cerr << "Cannot read `" << path << "' file.\n";
@@ -207,9 +202,7 @@ namespace xe
                 return 0;
             }
 
-            const char *source = shader_source.c_str();
-
-            glShaderSource(shader, 1, &source, nullptr);
+            glShaderSource(shader, shader_source.size(), shader_source.data(), nullptr);
 
             glCompileShader(shader);
             GLint is_compiled = 0;

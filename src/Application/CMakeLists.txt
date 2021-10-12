@@ -6,4 +6,6 @@ add_library(${PROJECT_NAME}
         application.h
         utils.cpp
         utils.h
+        shader_source.cpp 
+        shader_source.h
         )
