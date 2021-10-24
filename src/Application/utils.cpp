@@ -137,7 +137,7 @@ namespace xe
             }
         }
 
-        GLuint create_program(const shader_source_map_t &shaders_src)
+        GLuint create_program(const shader_source_map_t &shaders_src, const std::string &version)
         {
             shader_map_t shaders;
             for (const auto &[shader_type, src] : shaders_src)
@@ -181,6 +181,11 @@ namespace xe
             return program;
         }
 
+        GLuint create_program(const shader_source_map_t &shaders_src)
+        {
+            return create_program(shaders_src, "");
+        }
+
         GLuint create_shader_from_file(GLenum type, const std::string &path)
         {
             source_t shader_source;
@@ -197,7 +202,7 @@ namespace xe
             auto shader = glCreateShader(type);
             if (shader == 0)
             {
-                std::cerr << "Error creating shader"
+                std::cerr << "Error creating shader."
                           << "\n";
                 return 0;
             }
