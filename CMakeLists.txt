@@ -22,7 +22,7 @@ set(MAJOR 4)
 set(MINOR 6)
 set(GLAD_DEBUG OFF)
 
-if(APPLE)
+if(APPLE) #Apple has deprec
 set(MAJOR 4)
 set(MINOR 1)
 endif()

@@ -4,3 +4,5 @@ build/
 src/3rdParty/glfw/
 
 src/3rdParty/glm/
+
+cmake-build-debug/
