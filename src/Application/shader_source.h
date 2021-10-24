@@ -9,8 +9,9 @@ namespace xe
 {
     namespace utils
     {
-        struct source_t
+        class source_t
         {
+        public:
             source_t() = default;
 
             source_t(source_t &other) : src(other.src) { other.clear(); };
