@@ -2,6 +2,10 @@
 
 This repository contains the "Hello World!" equivalent for OpenGL C++ programming.  This will be the starting point for your assignments. 
 
+## Author
+
+Assignments in this project are developed by **Michał Biernat**.
+
 ## Downloading 
 
 To download the project you have to clone the repository
