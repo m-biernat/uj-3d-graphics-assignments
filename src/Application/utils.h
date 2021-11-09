@@ -36,6 +36,8 @@ namespace xe
 
         GLuint link_program(GLuint program);
 
+        GLuint create_program(const std::string &vs_path, const std::string &fs_path);
+
         GLuint create_program(const shader_source_map_t &shaders_src);
 
     }

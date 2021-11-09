@@ -46,6 +46,10 @@ namespace
      * @param len_args 
      * @param ... 
      */
+
+    void _pre_call_callback(const char *name, GLADapiproc apiproc, int len_args, ...) {
+        //std::cerr<<"Calling "<<name<<"\n";
+    };
     void _post_call_callback_default(void *ret, const char *name, GLADapiproc apiproc, int len_args, ...)
     {
         GLenum error_code;
@@ -103,10 +107,14 @@ xe::Application::Application(int width, int height, std::string title, bool debu
         glfwSetWindowRefreshCallback(window_, glfw_window_refresh_callback);
 
 #ifdef GLAD_OPTION_GL_DEBUG
+        std::cerr << "GLAD_OPTION_GL_DEBUG\n";
         //Additionally if GLAD debugging is on, the we can still switch it off via debug variable.
         //This works by registering an empty predefined above callback.  
-        if (debug)
+        if (debug) {
+            std::cerr << "DEBUG ON\n";
+            gladSetGLPreCallback(_pre_call_callback);
             gladSetGLPostCallback(_post_call_callback_default);
+        }
         else
         {
             std::cerr << "NO DEBUG\n";
