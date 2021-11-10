@@ -4,6 +4,6 @@ Proszę stworzyć i wyświetlić model piramidki o wysokości 1  i o  podstawie 
 
 Należy przed rysowaniem dodać polecenie:
 ```c++
-gl::glEnable(gl::GL_DEPTH_TEST)
+glEnable(GL_DEPTH_TEST)
 ```
 które włącza algorytm bufore głębi.
