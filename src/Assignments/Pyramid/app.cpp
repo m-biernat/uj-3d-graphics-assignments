@@ -15,6 +15,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/quaternion.hpp>
 
+int indicesCount;
+
 void SimpleShapeApplication::init()
 {
     // A utility function that reads the shader sources, compiles them and creates the program object
@@ -33,18 +35,35 @@ void SimpleShapeApplication::init()
 
     // A vector containing the x,y,z vertex coordinates for the triangle.
     std::vector<GLfloat> vertices = {
-        -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,    // 0
-        0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,     // 1
-        0.0f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f,     // 2
-        -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,    // 3 (0)
-        -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,   // 4
-        0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,    // 5
-        0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f      // 6 (1)
+        -0.5, -0.5, 0.5, 1.0, 0.0, 0.0,     // p0 (0)
+        0.5, -0.5, 0.5, 1.0, 0.0, 0.0,      // p1 (1)
+        -0.5, -0.5, -0.5, 1.0, 0.0, 0.0,    // p3 (2)
+        0.5, -0.5, -0.5, 1.0, 0.0, 0.0,     // p2 (3)
+
+
+         0.5, -0.5, -0.5, 1.0, 1.0, 0.0,    // p2 (4)
+        -0.5, -0.5, -0.5, 1.0, 1.0, 0.0,    // p3 (5)
+        0.0, 0.5, 0.0, 1.0, 1.0, 0.0,       // p4 (6)
+
+        0.5, -0.5, 0.5, 0.0, 1.0, 0.0,      // p1 (7)
+        0.5, -0.5, -0.5, 0.0, 1.0, 0.0,     // p2 (8)
+        0.0, 0.5, 0.0, 0.0, 1.0, 0.0,       // p4 (9)
+
+        -0.5, -0.5, 0.5, 0.0, 0.0, 1.0,     // p0 (10)
+        0.5, -0.5, 0.5, 0.0, 0.0, 1.0,      // p1 (11)
+        0.0, 0.5, 0.0, 0.0, 0.0, 1.0,       // p4 (12)
+
+        -0.5, -0.5, -0.5, 1.0, 0.0, 1.0,    // p3 (13)
+        -0.5, -0.5, 0.5, 1.0, 0.0, 1.0,     // p0 (14)
+        0.0, 0.5, 0.0, 1.0, 0.0, 1.0        // p4 (15)
     };
 
+    // Podstawa musi zostac rysowana zgodnie ze wskazowkami zegara (zeby byla widoczna z zewnątrz)
     std::vector<GLushort> indices = {
-        0, 1, 2, 3, 4, 5, 3, 5, 6
+        0, 2, 1, 2, 3, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
     };
+
+    indicesCount = indices.size();
 
     // Generating the buffer and loading the vertex data into it.
     GLuint v_buffer_handle;
@@ -90,7 +109,7 @@ void SimpleShapeApplication::init()
     glBufferData(GL_UNIFORM_BUFFER, 8 * sizeof(float), nullptr, GL_STATIC_DRAW);
     glBindBufferBase(GL_UNIFORM_BUFFER, 0, u_buffer_handle[0]);
 
-    float strength = 0.5;
+    float strength = 1.0;
     float color[3] = {1.0, 1.0, 1.0};
 
     glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(float), &strength);
@@ -103,19 +122,15 @@ void SimpleShapeApplication::init()
 
     // Stare transfromacje zostały zastąpione następującymi wektorami:
     glm::vec3 translation(0.0, -0.25, 0.0);
-    glm::vec3 rotation(glm::radians(0.0), glm::radians(0.0), glm::radians(30.0));
+    glm::vec3 rotation(glm::radians(90.0), glm::radians(0.0), glm::radians(0.0));
     glm::vec3 scale(0.5, 0.5, 0.0);
 
     glm::mat4 PVM(1.0);
 
     glm::mat4 Model(1.0);
-    Model = glm::translate(Model, translation);
-    Model *= glm::toMat4(glm::quat(rotation));  // Zmieniam wektor katow Euelera na Quaternion i bezposrednio wymnazam macierz
-    //Model = glm::rotate(Model, rotation.x, glm::vec3(1.0f, 0.0f, 0.0f));
-	//Model = glm::rotate(Model, rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
-    //Model = glm::rotate(Model, rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
-    Model = glm::scale(Model, scale);
-    // Po tych transformacjach model wygląda tak jak w poprzednim zadaniu.
+    //Model = glm::translate(Model, translation);
+    Model *= glm::toMat4(glm::quat(rotation));
+    //Model = glm::scale(Model, scale);
 
     glm::mat4 View(1.0);
     glm::vec3 eye(0.0, 0.0, 5.0);      // Pozycja kamery
@@ -135,6 +150,9 @@ void SimpleShapeApplication::init()
     // I suggest not to use white or black for better debuging.
     glClearColor(0.81f, 0.81f, 0.8f, 1.0f);
 
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
+
     // This setups an OpenGL vieport of the size of the whole rendering window.
     glViewport(0, 0, w, h);
 
@@ -146,7 +164,7 @@ void SimpleShapeApplication::frame()
 {
     // Binding the VAO will setup all the required vertex buffers.
     glBindVertexArray(vao_);
-    glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_SHORT, reinterpret_cast<GLvoid *>(0));
-    //glDrawArrays(GL_TRIANGLES, 0, 9);
+    glDrawElements(GL_TRIANGLES, indicesCount, GL_UNSIGNED_SHORT, reinterpret_cast<GLvoid *>(0));
+
     glBindVertexArray(0);
 }
