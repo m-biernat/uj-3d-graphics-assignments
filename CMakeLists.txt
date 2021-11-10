@@ -83,7 +83,7 @@ add_subdirectory(src/Application)
 
 
 #Assignments
-set(ASSIGNMENTS Triangle House Colors Indices Uniforms PVM Pyramid  Resizing Zoom  CameraMovement  Textures Phong MultipleLights NormalMaps )
+set(ASSIGNMENTS Triangle House Colors Indices Uniforms PVM Pyramid  Resize Zoom  CameraMovement  Textures Phong MultipleLights NormalMaps )
 
 set(ASSIGNMENTS_DIR ${SOURCE_DIR}/Assignments)
 link_libraries(application)
