@@ -49,12 +49,7 @@ Camera *camera_;
 i metody
 ```
 void set_camera(Camera *camera) { camera_ = camera; }
-Camera *camera() { return camera_; }
-~SimpleShapeApplication() {
-    if (camera_) {
-        delete camera_;
-    }
-}
+Camera *camera() const { return camera_; }
 ```
 
 W metodzie `init`  inicjujemy  wskaźnik do kamery:
