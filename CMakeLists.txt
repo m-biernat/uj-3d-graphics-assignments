@@ -70,7 +70,6 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(spdlog)
 
 
-find_package(spdlog REQUIRED)
 
 
 if (__VS_CODE__)
@@ -104,7 +103,7 @@ endif ()
 set(ASSIGNMENTS Triangle House Colors Indices Uniforms PVM Pyramid Resizing Zoom CameraMovement Meshes Materials MeshesMaterials SceneGraph Textures Phong PBR MultipleLights NormalMaps)
 
 set(ASSIGNMENTS_DIR ${SOURCE_DIR}/Assignments)
-link_libraries(application objreader)
+link_libraries(application)
 
 foreach (assignment ${ASSIGNMENTS})
     if (EXISTS ${ASSIGNMENTS_DIR}/${assignment})
