@@ -16,22 +16,26 @@
 #include <glm/gtx/quaternion.hpp>
 
 #include "Engine/Mesh.h"
+#include "Engine/Material.h"
 
 xe::Mesh *pyramid_mesh;
 
 void SimpleShapeApplication::init()
 {
-    // A utility function that reads the shader sources, compiles them and creates the program object
-    // As everything in OpenGL we reference program by an integer "handle".
-    auto program = xe::utils::create_program(
-        {{GL_VERTEX_SHADER, std::string(PROJECT_DIR) + "/shaders/base_vs.glsl"},
-         {GL_FRAGMENT_SHADER, std::string(PROJECT_DIR) + "/shaders/base_fs.glsl"}});
+    xe::ColorMaterial::init();
 
-    if (!program)
-    {
-        std::cerr << "Invalid program" << std::endl;
-        exit(-1);
-    }
+    glm::vec4 color_r(1.0f, 0.0f, 0.0f, 1.0f);
+    glm::vec4 color_y(1.0f, 1.0f, 0.0f, 1.0f);
+    glm::vec4 color_g(0.0f, 1.0f, 0.0f, 1.0f);
+    glm::vec4 color_b(0.0f, 0.0f, 1.0f, 1.0f);
+    glm::vec4 color_m(1.0f, 0.0f, 1.0f, 1.0f);
+
+    xe::ColorMaterial *red_mat = new xe::ColorMaterial(color_r);
+    xe::ColorMaterial *yellow_mat = new xe::ColorMaterial(color_y);
+    xe::ColorMaterial *green_mat = new xe::ColorMaterial(color_g);
+    xe::ColorMaterial *blue_mat = new xe::ColorMaterial(color_b);
+    xe::ColorMaterial *magenta_mat = new xe::ColorMaterial(color_m);
+
 
     int w, h;
     std::tie(w, h) = frame_buffer_size();
@@ -45,6 +49,7 @@ void SimpleShapeApplication::init()
     glm::vec3 center(0.0, 0.0, 0.0);   // Kierunek patrzenia
     glm::vec3 up(0.0, 1.0, 0.0);       // Ustawienie osi y jako tej do gory
     camera()->look_at(eye, center, up);
+
 
     // A vector containing the x,y,z vertex coordinates for the triangle.
     std::vector<GLfloat> pyramid_vertices = {
@@ -87,23 +92,13 @@ void SimpleShapeApplication::init()
     pyramid_mesh->vertex_attrib_pointer(0, 3, GL_FLOAT, 6 * sizeof(GLfloat), 0);
     pyramid_mesh->vertex_attrib_pointer(1, 3, GL_FLOAT, 6 * sizeof(GLfloat), 3 * sizeof(GLfloat));
 
-    pyramid_mesh->add_submesh(0, pyramid_indices.size());
+    pyramid_mesh->add_submesh(0, 6, red_mat);
+    pyramid_mesh->add_submesh(6, 9, yellow_mat);
+    pyramid_mesh->add_submesh(9, 12, green_mat);
+    pyramid_mesh->add_submesh(12, 15, blue_mat);
+    pyramid_mesh->add_submesh(15, 18, magenta_mat);
 
-    // Add uniform buffer
-    GLuint u_buffer_handle;
-    glGenBuffers(1, &u_buffer_handle);
 
-    glBindBuffer(GL_UNIFORM_BUFFER, u_buffer_handle);
-    glBufferData(GL_UNIFORM_BUFFER, 8 * sizeof(float), nullptr, GL_STATIC_DRAW);
-    glBindBufferBase(GL_UNIFORM_BUFFER, 0, u_buffer_handle);
-
-    float strength = 1.0;
-    float color[3] = {1.0, 1.0, 1.0};
-
-    glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(float), &strength);
-    glBufferSubData(GL_UNIFORM_BUFFER, 4 * sizeof(float), 3 * sizeof(float), color);
-    glBindBuffer(GL_UNIFORM_BUFFER, 0);
-    
     glGenBuffers(1, &u_pvm_buffer_);
     glBindBuffer(GL_UNIFORM_BUFFER, u_pvm_buffer_);
     glBufferData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), nullptr, GL_STATIC_DRAW);
@@ -118,8 +113,6 @@ void SimpleShapeApplication::init()
 
     // This setups an OpenGL vieport of the size of the whole rendering window.
     glViewport(0, 0, w, h);
-
-    glUseProgram(program);
 }
 
 //This functions is called every frame and does the actual rendering.
