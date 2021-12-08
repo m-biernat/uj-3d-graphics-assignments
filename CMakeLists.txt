@@ -88,7 +88,7 @@ find_package(OpenGL REQUIRED)
 
 # My part 
 
-link_libraries(OpenGL::GL glfw glm glad)
+link_libraries(OpenGL::GL glfw glm glad spdlog::spdlog)
 add_subdirectory(src/Application)
 
 if (EXISTS ${SOURCE_DIR}/ObjectReader)
