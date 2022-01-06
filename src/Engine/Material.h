@@ -13,14 +13,9 @@ namespace xe {
 
     class Material {
     public:
-        static GLuint program() { return shader_; }
-
         virtual void bind() = 0;
 
-        static void init_materials();
-
-    protected:
-        static GLuint shader_;
+        virtual void unbind() {};
     };
 
     class ColorMaterial : public Material {
@@ -31,10 +26,14 @@ namespace xe {
 
         static void init();
 
-    private:
+        static GLuint program() { return shader_; }
 
+    private:
+        static GLuint shader_;
         static GLuint color_uniform_buffer_;
+
         glm::vec4 color_;
+
     };
 
 
