@@ -70,9 +70,6 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(spdlog)
 
 
-find_package(spdlog REQUIRED)
-
-
 if (__VS_CODE__)
 
     # GLSLang
@@ -93,10 +90,17 @@ find_package(OpenGL REQUIRED)
 
 link_libraries(OpenGL::GL glfw glm glad)
 add_subdirectory(src/Application)
-add_subdirectory(src/ObjectReader)
+
+if (EXISTS ${SOURCE_DIR}/ObjectReader)
+    add_subdirectory(src/ObjectReader)
+else()
+    message("Warning: directory ObjectReader does not exists.")
+endif ()
 add_subdirectory(src/Engine)
-if (EXISTS src/EngineStudents)
+if (EXISTS ${SOURCE_DIR}/EngineStudents)
     add_subdirectory(src/EngineStudents)
+else()
+    message("Warning: directory EngineStudents does not exists.")
 endif ()
 
 
@@ -104,7 +108,7 @@ endif ()
 set(ASSIGNMENTS Triangle House Colors Indices Uniforms PVM Pyramid Resizing Zoom CameraMovement Meshes Materials MeshesMaterials SceneGraph Textures Phong PBR MultipleLights NormalMaps)
 
 set(ASSIGNMENTS_DIR ${SOURCE_DIR}/Assignments)
-link_libraries(application objreader)
+link_libraries(application)
 
 foreach (assignment ${ASSIGNMENTS})
     if (EXISTS ${ASSIGNMENTS_DIR}/${assignment})
