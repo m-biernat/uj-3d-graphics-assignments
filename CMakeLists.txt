@@ -96,12 +96,13 @@ if (EXISTS ${SOURCE_DIR}/ObjectReader)
 else()
     message("Warning: directory ObjectReader does not exists.")
 endif ()
-add_subdirectory(src/Engine)
-if (EXISTS ${SOURCE_DIR}/EngineStudents)
-    add_subdirectory(src/EngineStudents)
-else()
-    message("Warning: directory EngineStudents does not exists.")
-endif()
+
+if (EXISTS ${SOURCE_DIR}/Engine)
+    add_subdirectory(src/Engine)
+else ()
+    message("Warning: directory Engine does not exists.")
+endif ()
+
 
 
 #Assignments

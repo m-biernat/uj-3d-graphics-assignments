@@ -22,7 +22,6 @@ indeksów. Każdy obiekt tej klasy __musi__ posiadać jeden lub więcej obiektó
 jednemu poleceniu `gLDrawElements` i zawiera początek i koniec zakresu indeksów przekazywanych do tego polecenia.
 Podsiatki dodajemy za pomocą metody  `add_submesh`.
 
-
 Żeby skorzystać z instancji klasy `Mesh` musimy zapewnić dostęp do nich zarówno w metodzie `init` klasy `SimpleShapeApplication` jak i w metodzie `frame`.  W tym celu w tej klasie (`SimpleShapeApplication) proszę dodać pole 
 ```c++
 std::vector<Mesh*> meshes_; 
