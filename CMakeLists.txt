@@ -103,6 +103,18 @@ else()
     message("Warning: directory EngineStudents does not exists.")
 endif ()
 
+if (EXISTS ${SOURCE_DIR}/XeEngine)
+    add_subdirectory(src/XeEngine)
+else ()
+    message("Warning: directory XeEngine does not exists.")
+endif ()
+
+if (EXISTS ${SOURCE_DIR}/Engine)
+    add_subdirectory(src/Engine)
+else ()
+    message("Warning: directory Engine does not exists.")
+endif ()
+
 
 #Assignments
 set(ASSIGNMENTS Triangle House Colors Indices Uniforms PVM Pyramid Resizing Zoom CameraMovement Meshes Materials MeshesMaterials SceneGraph Textures Phong PBR MultipleLights NormalMaps)
