@@ -101,7 +101,7 @@ if (EXISTS ${SOURCE_DIR}/EngineStudents)
     add_subdirectory(src/EngineStudents)
 else()
     message("Warning: directory EngineStudents does not exists.")
-endif ()
+endif()
 
 
 #Assignments
