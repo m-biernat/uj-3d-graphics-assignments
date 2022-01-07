@@ -93,14 +93,8 @@ add_subdirectory(src/Application)
 
 if (EXISTS ${SOURCE_DIR}/ObjectReader)
     add_subdirectory(src/ObjectReader)
-else ()
+else()
     message("Warning: directory ObjectReader does not exists.")
-endif ()
-
-if (EXISTS ${SOURCE_DIR}/XeEngine)
-    add_subdirectory(src/XeEngine)
-else ()
-    message("Warning: directory XeEngine does not exists.")
 endif ()
 
 if (EXISTS ${SOURCE_DIR}/Engine)
@@ -108,6 +102,7 @@ if (EXISTS ${SOURCE_DIR}/Engine)
 else ()
     message("Warning: directory Engine does not exists.")
 endif ()
+
 
 
 #Assignments

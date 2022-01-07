@@ -22,7 +22,29 @@ indeksów. Każdy obiekt tej klasy __musi__ posiadać jeden lub więcej obiektó
 jednemu poleceniu `gLDrawElements` i zawiera początek i koniec zakresu indeksów przekazywanych do tego polecenia.
 Podsiatki dodajemy za pomocą metody  `add_submesh`.
 
-Proszę zapoznać się z tą klasą, a następnie wykorzystać ją do wyświetlenia piramidki.
+Żeby skorzystać z instancji klasy `Mesh` musimy zapewnić dostęp do nich zarówno w metodzie `init` klasy `SimpleShapeApplication` jak i w metodzie `frame`.  W tym celu w tej klasie (`SimpleShapeApplication) proszę dodać pole 
+```c++
+std::vector<Mesh*> meshes_; 
+```
+i odpowiednią metodę dodającą siatki
+```c++
+void add_submesh(Mesh *mesh) {
+    meshes_.push_back(mesh);
+}
+```
+
+Nastwpnie w wmetodzie `init` musimy stworzyć siatkę odpowiadającą piramidce. Najpierw tworzymy nową siatkę poleceniem
+```c++
+auto pyramid = new Mesh; 
+```
+Potem wykorzystując metody tej klasy alokujemy pamieć dla bufora wierzchołków (`allocate_vertex_buffer`), załadować   dane (`load_vertices`) i ustalić sposób odczytu tych danych (`vertex_attrib_pointer`). I podobnie dla bufora indeksów. 
+
+Na koniec w metodzie `frame` musimy dodać wywołanie metody `draw` na każdej siatce z tablicy (wektora) `messhes_`
+```c++
+ for (auto m: meshes_)
+        m->draw();
+```
+
 
 ## Materials
 
@@ -38,7 +60,7 @@ następnie przesłanie do niego koniecznych danych.
 Klasa `ColorMaterial` implementuje chyba najprostszy możliwy materiał polegający na kolorowaniu podsiatki jednym
 kolorem. Kody szaderów są praktycznie identyczne z tymi które Państwo napisali na potrzeby zadania `Uniforms`. Różnica
 jest taka, że zamiast modyfikować kolor, dane z bufora uniform są wykorzystywane do przypisania koloru danemu pikselowi.
-Mteoda `init()` z klasy `ColorMaterial` kompiluje te shadery i tworzy program który jest zapisany w zmiennej `shader_`.
+Metoda `init()` z klasy `ColorMaterial` kompiluje te shadery i tworzy program który jest zapisany w zmiennej `shader_`.
 Zarówno metoda `init` jak i zmienna `shader_` są statyczne. Oznacza to, że są związane z klasą, a nie obiektem. Jest tak
 ponieważ chcemy, aby wszystkie obiekty typu `ColorMaterial` miały ten sam program. Podobnie chcemy, aby wszystkie
 obiekty tej klasy dzieliły ten sam bufor uniform służący do przekazywania koloru do szadera. Ten bufor jest również

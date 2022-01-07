@@ -6,4 +6,8 @@ src/3rdParty/glfw/
 src/3rdParty/glm/
 
 cmake-build-debug/
+
+local-build/
 .DS_Store
+
+.idea/workspace.xml
