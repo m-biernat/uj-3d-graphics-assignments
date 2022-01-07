@@ -2,9 +2,6 @@
 // Created by Piotr Białas on 04/11/2021.
 //
 
-
-
-
 #include "mesh_loader.h"
 
 #include <memory>
@@ -20,13 +17,15 @@
 #include "Engine/Material.h"
 #include "Engine/Mesh.h"
 
+#ifndef uint
+#define uint unsigned int
+#endif
 
 namespace {
     xe::ColorMaterial *make_color_material(const xe::mtl_material_t &mat, std::string mtl_dir);
 }
 
 namespace xe {
-
 
     Mesh* load_mesh_from_obj(std::string path, std::string mtl_dir) {
 
@@ -87,6 +86,7 @@ namespace xe {
                 offset += 2 * sizeof(GLfloat);
             }
         }
+
         if (smesh.has_normals) {
 
             mesh->vertex_attrib_pointer(xe::sMesh::MAX_TEXCOORDS + 1, 3, GL_FLOAT, stride, offset);
@@ -149,5 +149,5 @@ namespace xe {
             return material;
         }
 
-
     }
+    
