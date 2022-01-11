@@ -42,13 +42,11 @@ void SimpleShapeApplication::init()
     camera()->look_at(eye, center, up);
 
 
+    xe::ColorMaterial::init();
+
+
     pyramid_mesh = xe::load_mesh_from_obj(std::string(ROOT_DIR) + "/Models/blue_marble.obj",
                                           std::string(ROOT_DIR) + "/Models");
-
-    xe::ColorMaterial::init();
-    xe::ColorMaterial *texture_mat = new xe::ColorMaterial(glm::vec4(1.0f));
-
-    pyramid_mesh->add_submesh(0, 18, texture_mat);
 
 
     glGenBuffers(1, &u_pvm_buffer_);
