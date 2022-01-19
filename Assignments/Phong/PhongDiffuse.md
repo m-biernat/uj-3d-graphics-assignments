@@ -133,8 +133,8 @@ const int MAX_POINT_LIGHTS=24;
 struct PointLight {
     vec3 position_in_view_space;
     vec3 color;
-    vec3 atn;
     float intensity;
+    float radius;
 } ;  
 
 layout(std140, binding=2) uniform Lights {
