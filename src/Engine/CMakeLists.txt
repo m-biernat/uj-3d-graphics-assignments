@@ -5,8 +5,12 @@ add_compile_definitions(PROJECT_NAME="${PROJECT_NAME}" PROJECT_DIR="${CMAKE_CURR
 
 add_library(engine
         Mesh.h Mesh.cpp
-        Material.h Material.cpp
+        Material.h
+        ColorMaterial.h ColorMaterial.cpp
+        PhongMaterial.h PhongMaterial.cpp
+        texture.h texture.cpp
         mesh_loader.h mesh_loader.cpp
+        Light.h
         )
 
 target_link_libraries(engine PUBLIC objreader)

@@ -1,0 +1,7 @@
+newmtl Texture
+Kd 0.25 0.25 0.25
+illum 0
+
+newmtl Phong
+Kd 0.25 0.25 0.25
+illum 1

@@ -16,7 +16,7 @@
 #include <glm/gtx/quaternion.hpp>
 
 #include "Engine/Mesh.h"
-#include "Engine/Material.h"
+#include "Engine/ColorMaterial.h"
 
 xe::Mesh *pyramid_mesh;
 

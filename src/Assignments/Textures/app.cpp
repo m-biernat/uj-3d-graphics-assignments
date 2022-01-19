@@ -16,7 +16,7 @@
 #include <glm/gtx/quaternion.hpp>
 
 #include "Engine/Mesh.h"
-#include "Engine/Material.h"
+#include "Engine/ColorMaterial.h"
 #include "Engine/mesh_loader.h"
 
 #include "spdlog/spdlog.h"
