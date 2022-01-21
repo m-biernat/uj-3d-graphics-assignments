@@ -51,8 +51,8 @@ void SimpleShapeApplication::init()
                                           std::string(ROOT_DIR) + "/Models");
 
 
-    add_ambient(glm::vec3(1.0f, 0.0f, 0.0f));
-    add_light(xe::PointLight(glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f), 10.0f, 5.0f));
+    add_ambient(glm::vec3(0.0f, 0.0f, 0.0f));
+    add_light(xe::PointLight(glm::vec3(0.0f, 0.0f, 0.5f), glm::vec3(1.0f, 1.0f, 1.0f), 5.0f, 5.0f));
     count_lights();
 
 

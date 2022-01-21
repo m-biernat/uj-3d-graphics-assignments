@@ -36,7 +36,6 @@ layout(std140, binding=2) uniform Lights {
 
 
 void main() {
-
     vec4 diffuse = vec4(1.0f);  // Wektor koloru powierzchni
 
     if (use_map_Kd)
@@ -45,14 +44,16 @@ void main() {
         diffuse = Kd;
 
     vec3 normal = normalize(vertex_normals_in_vs);
+    if(!gl_FrontFacing)
+        normal = -normal;
     vec3 pos_in_vs = vec3(vertex_coords_in_vs);
 
     vec3 diffuse_light = vec3(0.0f);    // Wektor koloru wynikający z oświetlenia
 
     for (int i = 0; i < n_p_lights; i++) {
-        vec3 lightDir = normalize(p_light[i].position_in_ws - pos_in_vs);
+        vec3 lightDir = normalize(p_light[i].position_in_vs - pos_in_vs);
         float diff = max(dot(normal, lightDir), 0.0f);
-        diffuse_light += diff * p_light[i].color * diffuse.rgb;
+        diffuse_light += diff * p_light[i].color * p_light[i].intensity * diffuse.rgb;
     }
 
     vec4 result = vec4(diffuse_light + diffuse.rgb * ambient, diffuse.a);
