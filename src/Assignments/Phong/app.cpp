@@ -58,7 +58,7 @@ void SimpleShapeApplication::init()
 
     glGenBuffers(1, &u_transform_buffer_);
     glBindBuffer(GL_UNIFORM_BUFFER, u_transform_buffer_);
-    glBufferData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4) + sizeof(glm::mat4x3), nullptr, GL_STATIC_DRAW);
+    glBufferData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4) + sizeof(glm::mat4x3) + sizeof(glm::vec4), nullptr, GL_STATIC_DRAW);
     glBindBufferBase(GL_UNIFORM_BUFFER, 1, u_transform_buffer_);
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
@@ -102,12 +102,15 @@ void SimpleShapeApplication::frame()
     auto R = glm::mat3(VM);
     auto N = glm::mat3(glm::cross(R[1], R[2]), glm::cross(R[2], R[0]), glm::cross(R[0], R[1]));
 
+    auto view = camera()->view() * glm::vec4(camera()->position(), 1.0f);
+
     glBindBuffer(GL_UNIFORM_BUFFER, u_transform_buffer_);
     glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), &PVM[0]);
     glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), &VM[0]);
     glBufferSubData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4), sizeof(glm::vec3), &N[0]);
     glBufferSubData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4) + sizeof(glm::vec4), sizeof(glm::vec3), &N[1]);
     glBufferSubData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4) + 2 * sizeof(glm::vec4), sizeof(glm::vec3), &N[2]);
+    glBufferSubData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4) + 3 * sizeof(glm::vec4), sizeof(glm::vec4), &view);
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
     pyramid_mesh->draw();

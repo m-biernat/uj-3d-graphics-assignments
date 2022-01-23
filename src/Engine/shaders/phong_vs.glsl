@@ -12,11 +12,13 @@ layout(std140, binding=1) uniform Transformations {
     mat4 PVM;
     mat4 VM;
     mat3 N;
+    vec4 view;
 };
 
 out vec2 vertex_texcoords;
 out vec4 vertex_coords_in_vs;
 out vec3 vertex_normals_in_vs;
+out vec4 view_in_vs;
 
 void main() {
 
@@ -24,5 +26,6 @@ void main() {
     vertex_texcoords = a_vertex_texcoords;
     vertex_coords_in_vs = VM * a_vertex_position;
     vertex_normals_in_vs = normalize(N * a_vertex_normals);
+    view_in_vs = view;
 
 }
