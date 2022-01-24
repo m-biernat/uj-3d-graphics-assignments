@@ -3,11 +3,14 @@
 layout(location=0) out vec4 vFragColor;
 
 #if __VERSION__ > 410
-layout(std140, binding=0) uniform Modifiers {
+layout(std140, binding=0) uniform Material {
 #else
-layout(std140) uniform Color {
+layout(std140) uniform Material {
     #endif
+    vec4 Ka;
     vec4 Kd;
+    vec4 Ks;
+    float Ns;
     bool use_map_Kd;
 };
 
@@ -35,8 +38,7 @@ layout(std140, binding=2) uniform Lights {
     PointLight p_light[MAX_POINT_LIGHTS];
 };
 
-float Ns = 500.0f;
-vec3 Ks = vec3(1.0f);
+//vec4 Ks = vec4(1.0f);
 
 void main() {
     vec4 color = vec4(1.0f);
@@ -46,7 +48,7 @@ void main() {
     else
         color = Kd;
 
-    vec3 ambient = color.rgb * ambient_light;
+    vec3 ambient = Ka.rgb * ambient_light;
 
     vec3 normal = normalize(vertex_normals_in_vs);
     if(!gl_FrontFacing)
@@ -66,7 +68,7 @@ void main() {
 
         vec3 half_dir = normalize(light_dir + view_dir);
         float spec = pow(max(dot(normal, half_dir), 0.0f), Ns);
-        specular += spec * Ks;
+        specular += spec * Ks.rgb;
     }
 
     vec4 result = vec4(ambient + diffuse + specular, color.a);
