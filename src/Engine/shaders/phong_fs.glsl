@@ -38,8 +38,6 @@ layout(std140, binding=2) uniform Lights {
     PointLight p_light[MAX_POINT_LIGHTS];
 };
 
-//vec4 Ks = vec4(1.0f);
-
 void main() {
     vec4 color = vec4(1.0f);
 
@@ -68,10 +66,10 @@ void main() {
 
         vec3 half_dir = normalize(light_dir + view_dir);
         float spec = pow(max(dot(normal, half_dir), 0.0f), Ns);
-        specular += spec * Ks.rgb;
+        specular += spec * p_light[i].intensity * Ks.rgb;
     }
 
-    vec4 result = vec4(ambient + diffuse + specular, color.a);
+    vec4 result = vec4(ambient + diffuse + specular, Ka.a * color.a * Ks.a);
 
-    vFragColor = normalize(result);
+    vFragColor = result;
 }
